@@ -13,6 +13,9 @@ use App\Api\Helpers\Api\ApiResponse;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Cache,Event;
+use Overtrue\LaravelPinyin\Facades\Pinyin;
+
+
 
 class FuserController extends Controller
 {
@@ -61,7 +64,7 @@ class FuserController extends Controller
          //$mysql = "SELECT @row_no:=@row_no+1 as row_no, a.id ,a.name,a.email ,CONCAT('[',a.employee_id ,']',b.name) as employee_name,CONCAT('[',c.institution_id,']',d.name) as institution_name  FROM users a ,(select  @row_no:=0) t  ,admin_employees b,admin_employee_institution c,admin_institutions d where a.employee_id=b.id and b.id=c.employee_id and c.institution_id=d.id and d.id in(".$g_in_s.") ";
          //$countmysql = "select count(id) as total from  (". $mysql. ") z";
          
-         $mysql = "SELECT @row_no:=@row_no+1 as row_no, a.id ,a.name,a.email ,CONCAT('[',a.employee_id ,']',b.name) as employee_name,CONCAT('[',b.institution_id,']',c.name) as institution_name  FROM users a ,(select  @row_no:=0) t  ,admin_employees b,admin_institutions c where a.employee_id=b.id and b.institution_id=c.id  and c.id in(%s) ";
+         $mysql = "SELECT @row_no:=@row_no+1 as row_no, a.id ,a.name,a.email,a.phone,a.sfz ,CONCAT('[',a.employee_id ,']',b.name) as employee_name,CONCAT('[',b.institution_id,']',c.name) as institution_name  FROM users a ,(select  @row_no:=0) t  ,admin_employees b,admin_institutions c where a.employee_id=b.id and b.institution_id=c.id  and c.id in(%s) ";
          $countmysql = "select count(id) as total from  (%s) z";
          //$cout = DB::select($countmysql);
          //dd(array_shift($cout)->total);
@@ -144,7 +147,7 @@ class FuserController extends Controller
                 //    $query->where('name', 'LIKE', '%' . $search['value'] . '%')
                 //        ->orWhere('email', 'like', '%' . $search['value'] . '%');
                 //})->count();
-                $where = " and ((a.name like '%".$search['value']."%' ) or (a.email  like '%".$search['value']."%')  or (b.name  like '%".$search['value']."%') or (c.name  like '%".$search['value']."%')) ";
+                $where = " and ((a.name like '%".$search['value']."%' ) or (a.email  like '%".$search['value']."%') or (a.phone  like '%".$search['value']."%') or (a.sfz  like '%".$search['value']."%')  or (b.name  like '%".$search['value']."%') or (c.name  like '%".$search['value']."%')) ";
                 $mysql = $mysql . $where;
                 $countmysql = "select count(id) as total from  (". $mysql. ") z";
                 $cout = DB::select($countmysql);
@@ -226,8 +229,27 @@ class FuserController extends Controller
         //$institutions = getInstitutionList($institutionId);
         //dd($institutions);
                 //$pid=getCurrentPermission(getUser('admin'))['pid'];
-                $employees =Institution::find($institutionId)->employees->toarray();
+                //$employees =Institution::find($institutionId)->employees->toarray();
+                //$employeeids = $employees_keys($employees);
+        //User::where
+
+
+        $temps = User::pluck('employee_id')->toarray(); //取所有已经存在的操作员信息
+
+
+        //所有的本机构的人员,但是排除在前台用户表中存在的;
+        $employees =Institution::find($institutionId)->employees()->whereNotIn('id',$temps)->get()->toarray();
+        //dd($temps,$employees);
+        //$temp1=array_intersect($employees,$emps);//返回交集
+        //$temp2=array_diff($employees,$temp1);//返回差集
+        //array_ushift($empls);
+        //dump($employees,$emps,$temp1,$temp2);
+
+       //dd( array_intersect($employees,$emps)) ;
+        //User::;
+                unset($temps);
                 $employees = array_pluck($employees, 'name','id');
+                //dd($employees);
                 //dd($employees);
                 //$permissions = $this->getAllPermissions();
 		//$roles = $this->getAllRole();
@@ -247,7 +269,12 @@ class FuserController extends Controller
      */
     public function store(FuserRequest $request)
     {
-        $request['password']=bcrypt($request['password']);
+         $employee_id = $request['employee_id'];
+         $employee=Employee::find($employee_id);
+         $request['phone']=$employee->mobile;
+         $request['sfz']=$employee->sfz;
+         $request['password']=bcrypt($request['password']);
+
         //$password = bcrypt($request->get('password'));
         $user = User::create($request->all());
          //dd($user->institutions());
@@ -366,6 +393,10 @@ class FuserController extends Controller
     public function update(FuserRequest $request,USER $user)
     {
                 //dd($request->route('fuser'));
+        $employee_id = $request['employee_id'];
+        $employee=Employee::find($employee_id);
+        $request['phone']=$employee->mobile;
+        $request['sfz']=$employee->sfz;
         
         
         
@@ -647,4 +678,178 @@ class FuserController extends Controller
             //        'msg'    => $employees,
             //    ]);
         }
+
+    //批量生成前台用户
+    public function autocreate()
+    {
+
+        $institutions = $this->getCurrInstitutions();
+
+        //dd($institutions);
+       // $institutionId=getCurrentInstitutionId();//获取当前用户的管理机构id
+       // $temps = User::pluck('employee_id')->toarray(); //取所有已经存在的操作员信息
+
+
+        //所有的本机构的人员,但是排除在前台用户表中存在的;
+      //  $employees =Institution::find($institutionId)->employees()->whereNotIn('id',$temps)->get()->toarray();
+        //dd($temps,$employees);
+        //$temp1=array_intersect($employees,$emps);//返回交集
+        //$temp2=array_diff($employees,$temp1);//返回差集
+        //array_ushift($empls);
+        //dump($employees,$emps,$temp1,$temp2);
+
+        //dd( array_intersect($employees,$emps)) ;
+        //User::;
+      //  unset($temps);
+      //  $employees = array_pluck($employees, 'name','id');
+        //dd($employees);
+        //dd($employees);
+        //$permissions = $this->getAllPermissions();
+        //$roles = $this->getAllRole();
+
+
+        return view('admin.fuser.autocreate', compact(['institutions']));
+
+
+
+
+    }
+
+    //批量生成前台用户
+    public function autostore(Request $request)
+    {
+        //dd(substr('420803197511055111',-4,4));
+
+        $institution_id = $request->institution_id;//获取机构id
+        $institutions = getInstitutionList($institution_id);
+        //dd(array_pluck($institutions,'id'));
+
+        $institution_ids=array_keys(_getAllInstitutionIdNameLevel($institutions));
+
+         $temps = array_sort(User::pluck('employee_id')->toarray()); //取所有已经存在的操作员信息
+        //$temps[]=30;
+         //dump($temps);
+        // array_add($temps,12,20);
+         $employees = array_sort(Employee::wherein('institution_id',$institution_ids)->pluck('id')->toArray());
+         $temp2=array_diff($employees,$temps);//返回差集 这个数组是可以更新的id
+         foreach ($temp2 as $id)
+         {
+             $employee = Employee::find($id);
+             //用户名= 员工名的全拼+身份证后4位
+             $name=implode('',Pinyin::convert($employee->name)).substr($employee->sfz,-4,4);
+             $data=[
+                 'name'=> $name,
+                 'phone'=>$employee->mobile,
+                 'email'=>$name.'@jmnsh.com',
+                 'sfz'=>$employee->sfz,
+                 'employee_id'=>$employee->id,
+                 'password'=>bcrypt('123456'),
+
+             ];
+             $user=User::create($data); //创建用户并保存
+             flash_info($user,'前台用户增加成功,初始密码123456','前台用户增加失败');
+         }
+//dd($institution_ids,$employees,$temps,array_diff($employees,$temps));
+        //所有的本机构的人员,但是排除在前台用户表中存在的;
+        //  $employees =Institution::find($institutionId)->employees()->whereNotIn('id',$temps)->get()->toarray();
+        //dd($temps,$employees);
+        //$temp1=array_intersect($employees,$emps);//返回交集
+        //$temp2=array_diff($employees,$temp1);//返回差集
+        //array_ushift($empls);
+        //dump($employees,$emps,$temp1,$temp2);
+
+        //dd( array_intersect($employees,$emps)) ;
+
+
+        //flash_info(1,'前台用户增加成功','前台用户增加失败');
+        //Event::fire(new permChange());
+        //event(new \App\Events\userAction('\App\Models\User', $user->id, 1, '添加了前台用户' . $user->name));
+        return redirect('/admin/fuser');
+        //return view('admin.fuser.autocreate', compact(['institutions']));
+
+
+
+
+    }
+
+//批量删除前台用户页面
+    public function autodeleteview()
+    {
+
+        $institutions = $this->getCurrInstitutions();
+
+        //dd($institutions);
+        // $institutionId=getCurrentInstitutionId();//获取当前用户的管理机构id
+        // $temps = User::pluck('employee_id')->toarray(); //取所有已经存在的操作员信息
+
+
+        //所有的本机构的人员,但是排除在前台用户表中存在的;
+        //  $employees =Institution::find($institutionId)->employees()->whereNotIn('id',$temps)->get()->toarray();
+        //dd($temps,$employees);
+        //$temp1=array_intersect($employees,$emps);//返回交集
+        //$temp2=array_diff($employees,$temp1);//返回差集
+        //array_ushift($empls);
+        //dump($employees,$emps,$temp1,$temp2);
+
+        //dd( array_intersect($employees,$emps)) ;
+        //User::;
+        //  unset($temps);
+        //  $employees = array_pluck($employees, 'name','id');
+        //dd($employees);
+        //dd($employees);
+        //$permissions = $this->getAllPermissions();
+        //$roles = $this->getAllRole();
+
+
+        return view('admin.fuser.autodeleteview', compact(['institutions']));
+
+
+
+
+    }
+    //批量删除前台用户
+    public function autodelete(Request $request)
+    {
+        //dd(substr('420803197511055111',-4,4));
+
+        $institution_id = $request->institution_id;//获取机构id
+        $institutions = getInstitutionList($institution_id);
+        //dd(array_pluck($institutions,'id'));
+
+        $institution_ids=array_keys(_getAllInstitutionIdNameLevel($institutions));
+
+        $temps = array_sort(User::pluck('employee_id')->toarray()); //取所有已经存在的操作员信息
+        //$temps[]=30;
+        //dump($temps);
+        // array_add($temps,12,20);
+        $employees = array_sort(Employee::wherein('institution_id',$institution_ids)->pluck('id')->toArray());
+        //dd($employees);
+        $temp2=array_intersect($employees,$temps);//返回交集 这个数组是可以更新的id
+        //dump($temp2);
+            $retu=User::wherein('employee_id',$temp2)->delete(); //创建用户并保存
+        //dd($retu);
+            flash_info($retu,'前台用户删除成功','前台用户删除失败');
+
+//dd($institution_ids,$employees,$temps,array_diff($employees,$temps));
+        //所有的本机构的人员,但是排除在前台用户表中存在的;
+        //  $employees =Institution::find($institutionId)->employees()->whereNotIn('id',$temps)->get()->toarray();
+        //dd($temps,$employees);
+        //$temp1=array_intersect($employees,$emps);//返回交集
+        //$temp2=array_diff($employees,$temp1);//返回差集
+        //array_ushift($empls);
+        //dump($employees,$emps,$temp1,$temp2);
+
+        //dd( array_intersect($employees,$emps)) ;
+
+
+        //flash_info(1,'前台用户增加成功','前台用户增加失败');
+        //Event::fire(new permChange());
+        //event(new \App\Events\userAction('\App\Models\User', $user->id, 1, '添加了前台用户' . $user->name));
+        return redirect('/admin/fuser');
+        //return view('admin.fuser.autocreate', compact(['institutions']));
+
+
+
+
+    }
 }

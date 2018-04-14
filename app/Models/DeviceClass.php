@@ -13,7 +13,7 @@ class DeviceClass extends Model
      * @var array
      */
     protected $fillable = [
-        'name','parent_id'
+        'name','parent_id','description'
     ];
     public $timestamps = false;
 

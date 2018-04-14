@@ -24,6 +24,13 @@
           <p class="form-control-static">{{$deviceclassPresenter->topDeviceClassName($deviceclasses,$deviceclass->parent_id)}}</p>
         </div>
       </div>
+      <div class="hr-line-dashed"></div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">分类描述</label>
+        <div class="col-sm-9">
+          <p class="form-control-static">{{$deviceclass->description}}</p>
+        </div>
+      </div>
 
       <div class="hr-line-dashed"></div>
       <div class="form-group">

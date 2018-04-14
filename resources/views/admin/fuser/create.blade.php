@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/iCheck/custom.css" rel="stylesheet">
+<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
 @endsection
 @section('content')
 @inject('fuserPresenter','App\Repositories\Presenters\FuserPresenter')
@@ -119,8 +119,8 @@
 @include('admin.user.modal')
 @endsection
 @section('js')
-<script type="text/javascript" src="/vendors/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/admin/js/icheck.js"></script>
+<script type="text/javascript" src="/js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" src="/js/icheck.js"></script>
 <script type="text/javascript">
     $(function () {
         if($("select[name=employee_id] >option").length===0){//选项的个数为0

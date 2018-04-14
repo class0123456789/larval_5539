@@ -29,7 +29,14 @@
             {!!$deviceclassPresenter->topDeviceClassList($deviceclasses,$deviceclass->parent_id)!!}
           </select>
         </div>
-      </div>   
+      </div>
+      <div class="hr-line-dashed"></div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">分类描述</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="描述" name="description" value="{{$deviceclass->description}}">
+        </div>
+      </div>
 
       <div class="hr-line-dashed"></div>
       <div class="form-group">

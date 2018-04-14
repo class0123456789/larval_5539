@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/dataTables/datatables.min.css" rel="stylesheet">
+<link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 
 @endsection
 @section('content')
@@ -67,8 +67,8 @@
 </div>
 @endsection
 @section('js')
-<script src="/vendors/dataTables/datatables.min.js"></script>
-  <script src="/vendors/layer/layer.js"></script>
+<script src="/js/plugins/dataTables/datatables.min.js"></script>
+  <script src="/js/plugins/layer/layer.js"></script>
  
   <script type="text/javascript">
     $(document).on('click','.destroy_item',function() {
@@ -89,7 +89,7 @@
                 var cid = 0;
                 var table = $("#dataTableBuilder").DataTable({
                     language: {
-                        'url': '/vendors/dataTables/language/zh.json',       
+                        'url': '/css/plugins/dataTables/language/zh.json',
                     },
                     "lengthMenu": [[ 10,15,20,30, -1], [10, 15, 20, 30, "全部"]],
 
@@ -97,6 +97,7 @@
 
                     order: [[1, "asc"]],
                     //"lengthChange": true,
+                    //'b<span style="color:#ff0000;">processing' : true,
                     'processing':true,
                     'serverSide': true,
                      "bJQueryUI": true,
@@ -134,6 +135,9 @@
                       },
                       cache : false, //禁用缓存
                       data: {jgh : cid},   //自定义传递的参数
+                      beforeSend: function () {
+                          //$("loading").show();
+                      },
                       //success : function(res){
                       //          console.log(res);
                       //      }//success : function(res){

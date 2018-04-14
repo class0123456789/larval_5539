@@ -32,12 +32,33 @@
 
       <div class="hr-line-dashed"></div>
       <div class="form-group">
-        <label class="col-sm-2 control-label">机构类型</label>
+        <label class="col-sm-2 control-label">机构级别</label>
         <div class="col-sm-10">
-          
-           <select data-placeholder="机构类型" data-live-search="true" class="selectpicker form-control" name="kind_id">
+
+          <select data-placeholder="机构类型" data-live-search="true" class="selectpicker form-control" name="kind_id">
             {!!$institutionPresenter->kindList($kinds)!!}
           </select>
+        </div>
+      </div>
+      <div class="hr-line-dashed"></div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">柜面系统机构号</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="柜面系统机构号" name="xtjgdh">
+        </div>
+      </div>
+      <div class="hr-line-dashed"></div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">人行机构编码</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="人行机构编码" name="rhjgbb">
+        </div>
+      </div>
+      <div class="hr-line-dashed"></div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">地址</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="机构地址" name="address">
         </div>
       </div>
       <div class="hr-line-dashed"></div>

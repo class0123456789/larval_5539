@@ -14,7 +14,7 @@ class Institution extends Model
     protected $table='admin_institutions';
     //protected $guarded = [];
     protected $fillable = [
-        'name', 'parent_id', 'kind_id'
+        'name', 'parent_id', 'kind_id','xtjgdh','rhjgbb','address'
     ];
     //机构与机构类型1对1
     //public function kind() {
@@ -40,6 +40,11 @@ class Institution extends Model
     {   //$this->hasMany($related, $foreignKey, $localKey)
         return $this->hasMany(AdminUser::class,'user_id');
     }
-    
+
+    //机构对应的 设备 配置 信息
+    public function houseinstitutions()
+    {   //$this->hasMany($related, $foreignKey, $localKey)
+        return $this->hasMany(HouseInstitution::class,'institution_id','id');
+    }
 
 }

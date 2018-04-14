@@ -1,9 +1,10 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/admin/css/dropzone/basic.css" rel="stylesheet">
-<link href="/admin/css/dropzone/dropzone.css" rel="stylesheet">
-<link href="/admin/css/jasny/jasny-bootstrap.min.css" rel="stylesheet">
-<link href="/admin/css/dropzone/style.css" rel="stylesheet">
+<link href="/css/plugins/dropzone/basic.css" rel="stylesheet">
+<link href="/css/plugins/dropzone/dropzone.css" rel="stylesheet">
+<link href="/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+
+
 
 
 @endsection
@@ -59,49 +60,12 @@
               <div class="form-group{{ $errors->has('file_url') ? ' has-error' : '' }}">
                   <label class="col-sm-2 control-label">文件URL</label>
                   <div class="col-sm-10">
-
-
-
-                      <div class="input-group">
-                          <input type="text" class="form-control" name="file_url" value="{{old('file_url')}}" placeholder="文件URL">
+                          <input type="text" class="form-control" name="file_url" value="{{old('file_url')}}" readonly placeholder="请选择上传文件">
                           @if ($errors->has('file_url'))
                               <span class="help-block m-b-none text-danger">{{ $errors->first('file_url') }}</span>
                           @endif
-
-                      </div>
                   </div>
-                  <div class="row">
-                      <div class="col-lg-12">
-                          <div class="ibox">
-                              <div class="ibox-title">
-                                  <h5>Dropzone.js</h5>
-                              </div>
-                              <div class="ibox-content">
 
-                                  <p>
-                                      <strong>Dropzone.js</strong> is a light weight JavaScript library that turns an HTML element into a dropzone. This means that a user can drag and drop a file onto it, and the file gets uploaded to the server via AJAX.
-                                  </p>
-
-                                  <form action="#" class="dropzone" id="dropzoneForm">
-                                      <div class="fallback">
-                                          <input name="file" type="file" multiple />
-                                      </div>
-                                  </form>
-
-                                  <p class="m-t-xs">
-                                      HTML markup code for abowe example:
-                                  </p>
-                                  <textarea id="code3">
-&lt;form action="#" class="dropzone" id="dropzoneForm"&gt;
-    &lt;div class="fallback"&gt;
-        &lt;input name="file" type="file" multiple /&gt;
-    &lt;/div&gt;
-&lt;/form&gt; </textarea>
-                                  <p class="m-t-xs">All avalible options and full documentation you can find: <a href="http://www.dropzonejs.com/#configuration-options">http://www.dropzonejs.com/#configuration-options</a> </p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
               </div>
 
 
@@ -123,25 +87,241 @@
     </div>
   	</div>
   </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>设备审批文件上传</h5>
+                </div>
+                <div class="ibox-content">
+
+
+
+                    <form action="#" class="dropzone" id="dropzoneForm">
+                        <div class="fallback">
+                            <input name="file" type="file"  />
+                        </div>
+                    </form>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </div>
 @endsection
 @section('js')
+    <script type="text/javascript" src="/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript" src="/js/icheck.js"></script>
     <!-- Custom and plugin javascript -->
+    <script src="/js/plugins/pace/pace.min.js"></script>
 
-    <script src="/vendors/pace/pace.min.js"></script>
-    <script src="/vendors/jasny/jasny-bootstrap.min.js"></script>
+    <!-- Jasny -->
+    <script src="/js/plugins/jasny/jasny-bootstrap.min.js"></script>
+
+
+
     <!-- DROPZONE -->
-    <script src="/vendors/dropzone/dropzone.js"></script>
-<script type="text/javascript" src="/vendors/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/admin/js/icheck.js"></script>
+    <script src="/js/plugins/dropzone/dropzone.js"></script>
+    <!-- CodeMirror -->
+
+
+
+
     <script type="text/javascript">
 
 
-        Dropzone.options.dropzoneForm = {
-            paramName: "file", // The name that will be used to transfer the file
-            maxFilesize: 2, // MB
-            dictDefaultMessage: "<strong>Drop files here or click to upload. </strong></br> (This is just a demo dropzone. Selected files are not actually uploaded.)"
-        };
+            Dropzone.options.dropzoneForm = {
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 512, // MB
+                maxFiles: 1,
+                uploadMultiple: false,
+                addRemoveLinks: true,
+                dictRemoveFile: '删除',
+                url: "/component/upload", // Set the url
+                method: "post",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+                dictDefaultMessage: "<strong>拖动文件到这里或点击这里上传. </strong></br>",
+                dictFallbackMessage: "浏览器不受支持",
+                dictFileTooBig: "文件过大上传文件最大支持.",
+                dictMaxFilesExceeded: "您最多只能上传1个文件！",
+                dictResponseError: '文件上传失败!',
+                // acceptedFiles: ".jpg,.gif,.png,.jpeg", //上传的类型
+                // dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg。",
+                 acceptedFiles: ".pdf", //上传的类型
+                 dictInvalidFileType: "文件类型只能是*.pdf。",
+                dictCancelUpload: "取消",
+                init: function () {
+                    this.on("addedfile", function (file) {
+                        //上传文件时触发的事件
+                        console.log('1_addedfile');
+                    });
+                    this.on("queuecomplete", function (file) {
+                        //上传完成后触发的方法
+                        console.log('2_queuecomplete');
+                        //console.log(data);
+                    });
+                    this.on("success", function (file, data) {
+                        //上传成功触发的事件
+                        console.log('success');
+                        console.log(file);
+                        console.log(data.message);
+                        $("input[name='file_url']").attr('value', data.message);
+                    });
+                    this.on("error", function (file, data) {
+                        //上传失败触发的事件
+                        console.log('fail');
+                        var message = '';
+                        //lavarel框架有一个表单验证，
+                        //对于ajax请求，JSON 响应会发送一个 422 HTTP 状态码，
+                        //对应file.accepted的值是false，在这里捕捉表单验证的错误提示
+                        if (file.accepted) {
+                            $.each(data, function (key, val) {
+                                message = message + val[0] + ';';
+                            });
+                            //控制器层面的错误提示，file.accepted = true的时候；
+                            console.log(message);
+                        }
+                    });
+                    this.on("removedfile", function (file) {
+                        console.log(file);
+                        console.log('removefile');
+                        console.log(this.files);
+
+                        console.log('removefile');
+                        if("success" === file.status) {//检查当前文件是成功传输了，才进行删除处理
+                            //删除文件时触发的方法
+                            var file_name = $("input[name='file_url']").val();
+
+                            if (file_name) {
+
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/component/delete',
+                                    data: {file_name: file_name},
+                                    dataType: 'html',
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                                    },
+                                    success: function (data) {
+                                        //var rep = JSON.parse(data);
+                                           console.log(data);
+                                            $("input[name='file_url']").attr('value', '');
+
+                                    }
+                                });
+                            }
+                        }
+                        //angular.element(appElement).scope().file_id = 0;
+                        //$("input[name='file_url']").attr('value','');
+                        //document.querySelector('div .dz-default').style.display = 'block';
+                    });
+                    this.on('maxfilesreached',function (file) {
+                        console.log('maxfilesreached');
+                    });
+                }
+
+            };
+
+
+            <!-- inline scripts related to this page -->
+//
+//            jQuery(function($){
+//
+//                try {
+//                    Dropzone.autoDiscover = false;
+//
+//                    var myDropzone = new Dropzone('#dropzone', {
+//                        previewTemplate: $('#preview-template').html(),
+//
+//                        thumbnailHeight: 120,
+//                        thumbnailWidth: 120,
+//                        maxFilesize: 30,
+//
+//                        addRemoveLinks : true,
+//                        dictRemoveFile: 'Remove',
+//
+//                        dictDefaultMessage :
+//                            '<span class="bigger-150 bolder"><i class="ace-icon fa fa-caret-right red"></i> Drop files</span> to upload \
+//                            <span class="smaller-80 grey">(or click)</span> <br /> \
+//                            <i class="upload-icon ace-icon fa fa-cloud-upload blue fa-3x"></i>'
+//                        ,
+//
+//                        thumbnail: function(file, dataUrl) {
+//                            if (file.previewElement) {
+//                                $(file.previewElement).removeClass("dz-file-preview");
+//                                var images = $(file.previewElement).find("[data-dz-thumbnail]").each(function() {
+//                                    var thumbnailElement = this;
+//                                    thumbnailElement.alt = file.name;
+//                                    thumbnailElement.src = dataUrl;
+//                                });
+//                                setTimeout(function() { $(file.previewElement).addClass("dz-image-preview"); }, 1);
+//                            }
+//                        }
+//
+//                    });
+//
+//
+//                    //simulating upload progress
+//                    var minSteps = 6,
+//                        maxSteps = 60,
+//                        timeBetweenSteps = 100,
+//                        bytesPerStep = 100000;
+//
+//                    myDropzone.uploadFiles = function(files) {
+//                        var self = this;
+//
+//                        for (var i = 0; i < files.length; i++) {
+//                            var file = files[i];
+//                            totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
+//
+//                            for (var step = 0; step < totalSteps; step++) {
+//                                var duration = timeBetweenSteps * (step + 1);
+//                                setTimeout(function(file, totalSteps, step) {
+//                                    return function() {
+//                                        file.upload = {
+//                                            progress: 100 * (step + 1) / totalSteps,
+//                                            total: file.size,
+//                                            bytesSent: (step + 1) * file.size / totalSteps
+//                                        };
+//
+//                                        self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
+//                                        if (file.upload.progress == 100) {
+//                                            file.status = Dropzone.SUCCESS;
+//                                            self.emit("success", file, 'success', null);
+//                                            self.emit("complete", file);
+//                                            self.processQueue();
+//                                        }
+//                                    };
+//                                }(file, totalSteps, step), duration);
+//                            }
+//                        }
+//                    }
+//
+//
+//                    //remove dropzone instance when leaving this page in ajax mode
+//                    $(document).one('ajaxloadstart.page', function(e) {
+//                        try {
+//                            myDropzone.destroy();
+//                        } catch(e) {}
+//                    });
+//
+//                } catch(e) {
+//                    alert('Dropzone.js does not support older browsers!');
+//                }
+//
+//            });
+
 
 
     </script>

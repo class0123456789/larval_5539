@@ -26,9 +26,30 @@
       </div>
       <div class="hr-line-dashed"></div>
       <div class="form-group">
-        <label class="col-sm-3 control-label">机构类型</label>
+        <label class="col-sm-3 control-label">机构级别</label>
         <div class="col-sm-9">
           <p class="form-control-static">{{$institutionPresenter->topKindName($kinds,$institution->kind_id)}}</p>
+        </div>
+      </div>
+      <div class="hr-line-dashed"></div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">柜面系统机构号</label>
+        <div class="col-sm-9">
+          <p class="form-control-static">{{$institution->xtjgdh}}</p>
+        </div>
+      </div>
+      <div class="hr-line-dashed"></div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">人行机构编码</label>
+        <div class="col-sm-9">
+          <p class="form-control-static">{{$institution->rhjgbb}}</p>
+        </div>
+      </div>
+      <div class="hr-line-dashed"></div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">地址</label>
+        <div class="col-sm-9">
+          <p class="form-control-static">{{$institution->address}}</p>
         </div>
       </div>
 

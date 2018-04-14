@@ -194,6 +194,12 @@ return [
         yajra\Datatables\DatatablesServiceProvider::class,
         HieuLe\Active\ActiveServiceProvider::class,
         Iwanli\Repository\RepositoryServiceProvider::class,
+        Overtrue\LaravelPinyin\ServiceProvider::class,//没字转拼音
+
+
+
+
+
 
     ],
 
@@ -246,6 +252,8 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Datatables' => yajra\Datatables\Datatables::class,
         'Active' => HieuLe\Active\Facades\Active::class,
+
+        'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,//汉字转拼音
 
     ],
 

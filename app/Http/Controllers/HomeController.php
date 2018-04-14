@@ -3,17 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Room;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
+
+    public $room;
+
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * HomeController constructor.
+     * @param Room $room
      */
-    public function __construct()
+    public function __construct(Room $room)
     {
-        $this->middleware('auth');
+        $this->room = $room;
     }
 
     /**
@@ -23,6 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $rooms = $this->room->paginate(config('room.page_size'));
+        return view('home' , ['rooms' => $rooms]);
     }
+
 }

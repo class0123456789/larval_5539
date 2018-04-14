@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/iCheck/custom.css" rel="stylesheet">
+<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
 @endsection
 @section('content')
 
@@ -15,11 +15,11 @@
         </li>
         <li>
             @if(haspermission('equipment.index'))
-            <a href="{{url('admin/equipment')}}">用途列表</a>
+            <a href="{{url('admin/equipment')}}">业务类型列表</a>
             @endif
         </li>
         <li class="active">
-            <strong>增加用途</strong>
+            <strong>增加业务类型</strong>
         </li>
     </ol>
   </div>
@@ -29,7 +29,7 @@
     <div class="col-lg-12">
       <div class="ibox float-e-margins">
         <div class="ibox-title">
-          <h5>增加用途</h5>
+          <h5>增加业务类型</h5>
           <div class="ibox-tools">
               <a class="collapse-link">
                   <i class="fa fa-chevron-up"></i>
@@ -43,9 +43,9 @@
           <form method="post" action="{{url('admin/equipment')}}" class="form-horizontal">
             {{csrf_field()}}
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-              <label class="col-sm-2 control-label">用途名称</label>
+              <label class="col-sm-2 control-label">业务类型名称</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="用途名称">
+                <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="业务类型名称">
                 @if ($errors->has('name'))
                 <span class="help-block m-b-none text-danger">{{ $errors->first('name') }}</span>
                 @endif
@@ -73,7 +73,7 @@
 </div>
 @endsection
 @section('js')
-<script type="text/javascript" src="/vendors/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/admin/js/icheck.js"></script>
+<script type="text/javascript" src="/js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" src="/js/icheck.js"></script>
 
 @endsection

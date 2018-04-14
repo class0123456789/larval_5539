@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/iCheck/custom.css" rel="stylesheet">
-    <link rel="stylesheet" href="/plugins/bootstrap-iconpicker/icon-fonts/font-awesome-4.2.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="/plugins/bootstrap-iconpicker/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css"/>
+<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/plugins/bootstrap-iconpicker/icon-fonts/font-awesome-4.2.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/css/plugins/bootstrap-iconpicker/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css"/>
 @endsection
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -114,9 +114,9 @@
 </div>
 @endsection
 @section('js')
-<script type="text/javascript" src="/vendors/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/admin/js/icheck.js"></script>
-    <script type="text/javascript" src="/plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.3.0.min.js"></script>
-    <script type="text/javascript" src="/plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.js"></script>
+<script type="text/javascript" src="/js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" src="/js/icheck.js"></script>
+    <script type="text/javascript" src="/js/plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.3.0.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.js"></script>
 @endsection
 

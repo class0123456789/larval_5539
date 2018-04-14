@@ -33,7 +33,7 @@ class FuserRequest extends FormRequest
             $rules['email'] = 'required|unique:users,email|email|max:255';
             $rules['password']='required|confirmed|min:6|max:50';
             $rules['institution_id']='required';
-            $rules['employee_id']='required';
+            $rules['employee_id']='required|integer|min:1';
         }else{//修改put方法
             //$this->route('user')->id; //得到路由中role对象的id
            

@@ -17,24 +17,25 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        //if (Auth::guard($guard)->check()) {
-        //    return redirect('/home');
-        //}
+        if (Auth::guard($guard)->check()) {
+            $url = $guard ? $guard.'/index':'/index';
+            return redirect($url );
+        }
         //dd($guard) ;
-        if (\Auth::guard('admin')->check()) {
-            //dd($guard) ;
-            //$url = $guard ? '/admin/index':'/home';
-            //return redirect('/admin/index');
-            //echo url()->current();
-            return redirect('/');
-            //return Redirect::to('/admin');
-        }
-        
-        if (\Auth::guard()->check()) {
-            //dd($guard) ;
-          //  $url = $guard ? '/admin/index':'/home';
-            return redirect('/home');
-        }
+//        if (\Auth::guard('admin')->check()) {
+//            //dd($guard) ;
+//            //$url = $guard ? '/admin/index':'/home';
+//            //return redirect('/admin/index');
+//            //echo url()->current();
+//            return redirect('/admin/index');
+//            //return Redirect::to('/admin');
+//        }
+//
+//        if (\Auth::guard()->check()) {
+//            //dd($guard) ;
+//          //  $url = $guard ? '/admin/index':'/home';
+//            return redirect('/');
+//        }
 
         return $next($request);
     }

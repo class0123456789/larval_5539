@@ -2,7 +2,7 @@
 
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/dataTables/datatables.min.css" rel="stylesheet">
+<link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 @endsection
 @section('content')
 
@@ -11,7 +11,7 @@
 
 
 <div class="row wrapper border-bottom white-bg page-heading">
-  <div class="col-lg-10">
+  <div class="col-lg-7">
     <h2>前台用户管理</h2>
     <ol class="breadcrumb">
         <li>
@@ -27,12 +27,26 @@
     </ol>
   </div>
    @if(haspermission('fuser.create'))
-  <div class="col-lg-2">
+  <div class="col-lg-1">
     <div class="title-action">
       <a href="{{url('admin/fuser/create')}}" class="btn btn-info">增加前台用户</a>
     </div>
   </div>
   @endif
+    @if(haspermission('admin/fuser/autocreate'))
+        <div class="col-lg-1">
+            <div class="title-action">
+                <a href="{{url('admin/fuser/autocreate')}}" class="btn btn-primary">批量生成用户</a>
+            </div>
+        </div>
+    @endif
+    @if(haspermission('admin/fuser/autodelete'))
+        <div class="col-lg-1">
+            <div class="title-action">
+                <a href="{{url('admin/fuser/autodeleteview')}}" class="btn btn-danger">批量删除用户</a>
+            </div>
+        </div>
+    @endif
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -59,6 +73,8 @@
                                     <th>ID</th>
 			            <th>名称</th>
 			            <th>email</th>
+                        <th>电话</th>
+                          <th>身份证</th>
 			            <th>对应员工</th>
 			            <th>所属机构</th>
 			            <th>操作</th>
@@ -76,8 +92,8 @@
 @endsection
 @section('js')
 
-<script src="/vendors/dataTables/datatables.min.js"></script>
-<script src="/vendors/layer/layer.js"></script>
+<script src="/js/plugins/dataTables/datatables.min.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
 <script type="text/javascript">
   $(document).on('click','.destroy_item',function() {
     var _item = $(this);
@@ -114,7 +130,7 @@
                 var cid = 0;
                 var table = $("#dataTableBuilder").DataTable({
                     language: {
-                        'url': '/vendors/dataTables/language/zh.json',       
+                        'url': '/css/plugins/dataTables/language/zh.json',
                     },
                     "lengthMenu": [[ 10,15,20,30, -1], [10, 15, 20, 30, "全部"]],
 
@@ -209,6 +225,8 @@
                         {"data": "id"},
                         {"data": "name"},
                         {"data": "email"},
+                        {"data": "phone"},
+                        {"data": "sfz"},
                         {"data": "employee_name"},
                         {"data": "institution_name"},
                         {"data": "action","type": "html","searchable": false,"orderable" : false}

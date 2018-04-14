@@ -100,7 +100,19 @@ class MaintenanceProviderController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $maintenanceprovider = MaintenanceProvider::find($id);
+            //dd($maintenanceprovider);
+            //$deviceclasses=$this->getCurrDeviceClasses();
+            //dd($deviceclasses);
+            // dd( $devicemodel['brand']->name);
+            return view('admin.maintenanceprovider.show',compact('maintenanceprovider'));
+        } catch (Exception $e) {
+            //flash('查看错误', 'danger');
+            flash($e->getMessage(), 'danger');
+            redirect('/admin/maintenanceprovider');
+            //redirect('/admin/role');
+        }
     }
 
     /**

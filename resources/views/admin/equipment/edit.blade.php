@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/iCheck/custom.css" rel="stylesheet">
+<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
 @endsection
 @section('content')
 
@@ -15,11 +15,11 @@
         </li>
         <li>
             @if(haspermission('equipment.index'))
-            <a href="{{url('admin/equipment')}}">用途列表</a>
+            <a href="{{url('admin/equipment')}}">业务类型列表</a>
             @endif
         </li>
         <li class="active">
-            <strong>修改用途</strong>
+            <strong>修改业务类型</strong>
         </li>
     </ol>
   </div>
@@ -46,9 +46,9 @@
             {{method_field('PUT')}}
             
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-              <label class="col-sm-2 control-label">用途名称</label>
+              <label class="col-sm-2 control-label">业务类型名称</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="name" value="{{old('name',$equipment->name)}}" placeholder="用途名称">
+                <input type="text" class="form-control" name="name" value="{{old('name',$equipment->name)}}" placeholder="业务类型">
                 @if ($errors->has('name'))
                 <span class="help-block m-b-none text-danger">{{ $errors->first('name') }}</span>
                 @endif
@@ -75,6 +75,6 @@
 </div>
 @endsection
 @section('js')
-<script type="text/javascript" src="/vendors/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/admin/js/icheck.js"></script>
+<script type="text/javascript" src="/js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" src="/js/icheck.js"></script>
 @endsection

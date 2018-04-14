@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/iCheck/custom.css" rel="stylesheet">
+<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
 @endsection
 @section('content')
 @inject('employeePresenter','App\Repositories\Presenters\EmployeePresenter')
@@ -60,8 +60,18 @@
                 <span class="help-block m-b-none text-danger">{{ $errors->first('mobile') }}</span>
                 @endif
               </div>
-            </div>            
-            <div class="hr-line-dashed"></div>
+            </div>
+              <div class="hr-line-dashed"></div>
+              <div class="form-group{{ $errors->has('sfz') ? ' has-error' : '' }}">
+                  <label class="col-sm-2 control-label">身份证号</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" name="sfz" value="{{old('sfz')}}" placeholder="身份证号">
+                      @if ($errors->has('sfz'))
+                          <span class="help-block m-b-none text-danger">{{ $errors->first('sfz') }}</span>
+                      @endif
+                  </div>
+              </div>
+              <div class="hr-line-dashed"></div>
             <div class="form-group{{ $errors->has('sex') ? ' has-error' : '' }}">
               <label class="col-sm-2 control-label">性别</label>
               <div class="col-sm-10">
@@ -110,7 +120,7 @@
 </div>
 @endsection
 @section('js')
-<script type="text/javascript" src="/vendors/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/admin/js/icheck.js"></script>
+<script type="text/javascript" src="/js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" src="/js/icheck.js"></script>
 
 @endsection

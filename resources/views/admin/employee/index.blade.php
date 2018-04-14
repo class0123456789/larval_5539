@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/dataTables/datatables.min.css" rel="stylesheet">
+<link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 @endsection
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
-  <div class="col-lg-10">
+  <div class="col-lg-7">
     <h2>员工管理</h2>
     <ol class="breadcrumb">
         <li>
@@ -17,16 +17,34 @@
         </li>
     </ol>
   </div>
-
-
-  <div class="col-lg-2">
-    <div class="title-action">
-      @if(haspermission('employee.create'))
-      <a href="{{url('admin/employee/create')}}" class="btn btn-info">增加员工</a>
-      @endif
+    <div class="col-lg-1">
+        <div class="title-action">
+            @if(haspermission('employee.create'))
+                <a href="{{url('admin/employee/create')}}" class="btn btn-info">增加员工信息</a>
+            @endif
+        </div>
     </div>
-  </div>
-
+    <div class="col-lg-1">
+        <div class="title-action">
+            @if(haspermission('admin/employee/autocreate'))
+                <a href="{{url('admin/employee/autocreate')}}" class="btn btn-primary">批量导入员工</a>
+            @endif
+        </div>
+    </div>
+    <div class="col-lg-1">
+        <div class="title-action">
+            @if(haspermission('admin/employee/autodeleteview'))
+                <a href="{{url('admin/employee/autodeleteview')}}" class="btn btn-danger">批量删除员工</a>
+            @endif
+        </div>
+    </div>
+    <div class="col-lg-1">
+        <div class="title-action">
+            @if(haspermission('admin/employee/downloadview'))
+                <a href="{{'/admin/employee/downloadview'}}" class="btn btn-warning">下载员工信息</a>
+            @endif
+        </div>
+    </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -56,6 +74,7 @@
                           <th>性别</th>
                           <th>岗位</th>
                           <th>所在机构</th>
+                          <th>身份证</th>
 			            <th>操作</th>
 			          </tr>
 		          </thead>
@@ -75,8 +94,8 @@
 </div>
 @endsection
 @section('js')
-<script src="/vendors/dataTables/datatables.min.js"></script>
-  <script src="/vendors/layer/layer.js"></script>
+<script src="/js/plugins/dataTables/datatables.min.js"></script>
+  <script src="/js/plugins/layer/layer.js"></script>
 
 <script type="text/javascript">
   $(document).on('click','.destroy_item',function() {
@@ -98,7 +117,7 @@
                 var cid = 0;
                 var table = $("#dataTableBuilder").DataTable({
                     language: {
-                        'url': '/vendors/dataTables/language/zh.json',       
+                        'url': '/css/plugins/dataTables/language/zh.json',
                     },
                     "lengthMenu": [[ 10,15,20,30, -1], [10, 15, 20, 30, "全部"]],
 
@@ -177,6 +196,7 @@
                         {"data": "sex"},
                         {"data": "post"},
                         {"data": "institution_name"},
+                        {"data": "sfz"},
                         {"data": "action","type": "html","searchable": false,"orderable" : false}
                     ],
 
@@ -220,7 +240,7 @@
 
                         }
                     },
-                    {    'targets': -4, "render": function (data, type, row) {
+                    {    'targets': -5, "render": function (data, type, row) {
                                 if(row['sex']) {
                                     return '男';
                                 }else{

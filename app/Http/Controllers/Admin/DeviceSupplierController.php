@@ -99,7 +99,19 @@ class DeviceSupplierController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $supplier = DeviceSupplier::find($id);
+            //dd($maintenanceprovider);
+            //$deviceclasses=$this->getCurrDeviceClasses();
+            //dd($deviceclasses);
+            // dd( $devicemodel['brand']->name);
+            return view('admin.supplier.show',compact('supplier'));
+        } catch (Exception $e) {
+            //flash('查看错误', 'danger');
+            flash($e->getMessage(), 'danger');
+            redirect('/admin/supplier');
+            //redirect('/admin/role');
+        }
     }
 
     /**

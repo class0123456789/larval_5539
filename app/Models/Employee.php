@@ -14,7 +14,7 @@ class Employee extends Model
      protected $table='admin_employees';
      //protected $guarded = [];
      protected $fillable = [
-        'name', 'post', 'sex','mobile','institution_id'
+        'name', 'post', 'sex','mobile','institution_id','sfz'
     ];
     // public function institutions(){
     //     return $this->belongsToMany(Institution::class,'admin_employee_institution','employee_id','institution_id')->withPivot(['employee_id','institution_id']);

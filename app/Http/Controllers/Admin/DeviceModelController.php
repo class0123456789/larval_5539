@@ -179,7 +179,19 @@ class DeviceModelController extends Controller
      */
     public function show($id)
     {
-        //
+
+        try {
+            $devicemodel = DeviceModel::with('brand','deviceclass')->find($id);
+            $deviceclasses=$this->getCurrDeviceClasses();
+            //dd($deviceclasses);
+           // dd( $devicemodel['brand']->name);
+            return view('admin.devicemodel.show',compact('devicemodel','deviceclasses'));
+        } catch (Exception $e) {
+            //flash('查看错误', 'danger');
+            flash($e->getMessage(), 'danger');
+            redirect('/admin/devicemodel');
+            //redirect('/admin/role');
+        }
     }
 
     /**

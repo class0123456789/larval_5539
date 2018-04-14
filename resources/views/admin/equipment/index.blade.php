@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/dataTables/datatables.min.css" rel="stylesheet">
+<link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 @endsection
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -13,7 +13,7 @@
             @endif
         </li>
         <li class="active">
-            <strong>用途列表</strong>
+            <strong>业务类型列表</strong>
         </li>
     </ol>
   </div>
@@ -22,7 +22,7 @@
   <div class="col-lg-2">
     <div class="title-action">
       @if(haspermission('equipment.create'))
-      <a href="{{url('admin/equipment/create')}}" class="btn btn-info">增加用途</a>
+      <a href="{{url('admin/equipment/create')}}" class="btn btn-info">增加业务类型</a>
       @endif
     </div>
   </div>
@@ -33,7 +33,7 @@
     <div class="col-lg-12">
       <div class="ibox float-e-margins">
         <div class="ibox-title">
-          <h5>用途管理</h5>
+          <h5>业务类型管理</h5>
           <div class="ibox-tools">
             <a class="collapse-link">
               <i class="fa fa-chevron-up"></i>
@@ -51,7 +51,7 @@
 			          <tr>
 			            <th >行号</th>
                         <th >ID</th>
-			            <th>用途名称</th>
+			            <th>业务类型</th>
 
 
 			            <th>操作</th>
@@ -73,13 +73,13 @@
 </div>
 @endsection
 @section('js')
-<script src="/vendors/dataTables/datatables.min.js"></script>
-  <script src="/vendors/layer/layer.js"></script>
+<script src="/js/plugins/dataTables/datatables.min.js"></script>
+  <script src="/js/plugins/layer/layer.js"></script>
 
 <script type="text/javascript">
   $(document).on('click','.destroy_item',function() {
     var _item = $(this);
-    layer.msg('用途删除提示', {
+    layer.msg('业务类型删除提示', {
       time: 0, //不自动关闭
       btn: ['确定', '取消'],
       icon: 5,
@@ -96,7 +96,7 @@
                 var cid = 0;
                 var table = $("#dataTableBuilder").DataTable({
                     language: {
-                        'url': '/vendors/dataTables/language/zh.json',       
+                        'url': '/css/plugins/dataTables/language/zh.json',
                     },
                     "lengthMenu": [[ 10,15,20,30, -1], [10, 15, 20, 30, "全部"]],
 

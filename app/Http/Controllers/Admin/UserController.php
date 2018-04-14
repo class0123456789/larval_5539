@@ -27,7 +27,7 @@ class UserController extends Controller
         $currinstitutions=$this->getCurrInstitutions();
         $arr = _getAllInstitutionId($currinstitutions);
         $g_in_s = implode(',',$arr);
-        $mysql = "SELECT @row_no:=@row_no+1 as row_no, a.id ,a.name,a.email ,CONCAT('[',a.institution_id ,']',b.name) as institution_name  FROM admin_users a ,(select  @row_no:=0) t  ,admin_institutions b where a.institution_id=b.id and b.id in(%s) ";
+        $mysql = "SELECT @row_no:=@row_no+1 as row_no, a.id ,a.name,a.email, CONCAT('[',a.institution_id ,']',b.name) as institution_name  FROM admin_users a ,(select  @row_no:=0) t  ,admin_institutions b where a.institution_id=b.id and b.id in(%s) ";
         $countmysql = "select count(id) as total from  (%s) z";
         //dd(\Route::getRoutes()->getRoutesByMethod()['GET']['admin/menu'],haspermission('menu/index')); //测试路由
 //        if($request->ajax()) {

@@ -24,6 +24,7 @@ class FinancialApprovalRequest extends FormRequest
     public function rules()
     {
         //dd($this->route('fuser'));
+        //dd($this->route('financialapproval'));
         //dd($this->route('fuser')->id);
         //$rules['description']='nullable';
         //$rules['description']='nullable';
@@ -43,14 +44,14 @@ class FinancialApprovalRequest extends FormRequest
                 'required',
                 //'max:50',
                 //'unique:users,name',//排除当前ID
-                'unique:device_financial_approval,file_no'.$this->route('devicefinancialapproval')->id,//排除当前ID
+                'unique:device_financial_approval,file_no,'.$this->route('financialapproval'),//排除当前ID
                 //Rule::unique('admin_employees,mobile')->ignore(request()->route('admin/employee'),'id'),
             ];
             $rules['file_url'] = [
                 'required',
                 //'max:50',
                 //'unique:users,name',//排除当前ID
-                'unique:device_financial_approval,file_url'.$this->route('devicefinancialapproval')->id,//排除当前ID
+                'unique:device_financial_approval,file_url,'.$this->route('financialapproval'),//排除当前ID
                 //Rule::unique('admin_employees,mobile')->ignore(request()->route('admin/employee'),'id'),
             ];
 

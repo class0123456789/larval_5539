@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/iCheck/custom.css" rel="stylesheet">
+<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
 @endsection
 @section('content')
 @inject('userPresenter','App\Repositories\Presenters\UserPresenter')
@@ -55,13 +55,20 @@
                 <p class="form-control-static">{{$user->email}}</p>
               </div>
             </div>
-            <div class="hr-line-dashed"></div>
-            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-              <label class="col-sm-2 control-label">用户邮箱</label>
-              <div class="col-sm-10">
-                <p class="form-control-static">{{$user->email}}</p>
+              <div class="hr-line-dashed"></div>
+              <div class="form-group{{ $errors->has('sfz') ? ' has-error' : '' }}">
+                  <label class="col-sm-2 control-label">身份证</label>
+                  <div class="col-sm-10">
+                      <p class="form-control-static">{{$user->sfz}}</p>
+                  </div>
               </div>
-            </div>
+              <div class="hr-line-dashed"></div>
+              <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                  <label class="col-sm-2 control-label">电话</label>
+                  <div class="col-sm-10">
+                      <p class="form-control-static">{{$user->phone}}</p>
+                  </div>
+              </div>
             <div class="hr-line-dashed"></div>
             <div class="form-group{{ $errors->has('institution_id') ? ' has-error' : '' }}">
               <label class="col-sm-2 control-label">绑定机构</label>
@@ -93,6 +100,6 @@
 @include('admin.fuser.modal')
 @endsection
 @section('js')
-<script type="text/javascript" src="/vendors/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/admin/js/icheck.js"></script>
+<script type="text/javascript" src="/js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" src="/js/icheck.js"></script>
 @endsection

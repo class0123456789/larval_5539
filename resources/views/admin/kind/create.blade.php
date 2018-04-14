@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/iCheck/custom.css" rel="stylesheet">
+<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
 @endsection
 @section('content')
 
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
-    <h2>机构类型管理</h2>
+    <h2>机构级别管理</h2>
     <ol class="breadcrumb">
         <li>
             @if(haspermission('admin/dash'))
@@ -15,11 +15,11 @@
         </li>
         <li>
             @if(haspermission('kind.index'))
-            <a href="{{url('admin/kind')}}">机构类型列表</a>
+            <a href="{{url('admin/kind')}}">机构级别列表</a>
             @endif
         </li>
         <li class="active">
-            <strong>增加机构类型</strong>
+            <strong>增加机构级别</strong>
         </li>
     </ol>
   </div>
@@ -29,7 +29,7 @@
     <div class="col-lg-12">
       <div class="ibox float-e-margins">
         <div class="ibox-title">
-          <h5>增加机构类型</h5>
+          <h5>增加机构级型</h5>
           <div class="ibox-tools">
               <a class="collapse-link">
                   <i class="fa fa-chevron-up"></i>
@@ -43,9 +43,9 @@
           <form method="post" action="{{url('admin/kind')}}" class="form-horizontal">
             {{csrf_field()}}
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-              <label class="col-sm-2 control-label">机构类型名称</label>
+              <label class="col-sm-2 control-label">机构级别名称</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="机构类型名称"> 
+                <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="机构级别名称">
                 @if ($errors->has('name'))
                 <span class="help-block m-b-none text-danger">{{ $errors->first('name') }}</span>
                 @endif
@@ -74,7 +74,7 @@
 </div>
 @endsection
 @section('js')
-<script type="text/javascript" src="/vendors/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/admin/js/icheck.js"></script>
+<script type="text/javascript" src="/js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" src="/js/icheck.js"></script>
 
 @endsection

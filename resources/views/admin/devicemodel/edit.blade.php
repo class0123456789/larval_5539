@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/iCheck/custom.css" rel="stylesheet">
+<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
 @endsection
 @section('content')
     @inject('devicemodelPresenter','App\Repositories\Presenters\DeviceModelPresenter')
@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="ibox-content">
-          <form method="post" action="{{url('admin/devicemodel',$devicemodel->id)}}" class="form-horizontal">
+          <form method="post" action="{{url('admin/devicemodel',$devicemodel->id)}}" onsubmit="return validate()" class="form-horizontal">
             {{csrf_field()}}
             {{method_field('PUT')}}
             
@@ -81,8 +81,8 @@
             <div class="form-group{{ $errors->has('class_id') ? ' has-error' : '' }}">
               <label class="col-sm-2 control-label">所属设备分类</label>
               <div class="col-sm-10">
-                  <select name="class_id" class="form-control">
-                       {!!$devicemodelPresenter->topDeviceClasslList($curr_deviceclasses,$devicemodel->deviceclass->id) !!}
+                  <select name="class_id" class="form-control" id="class_id">
+                       {!!$devicemodelPresenter->topDeviceClassList($curr_deviceclasses,$devicemodel->deviceclass->id) !!}
 
                   </select>
                  
@@ -110,7 +110,36 @@
 @include('admin.devicemodel.modal')
 @endsection
 @section('js')
-<script type="text/javascript" src="/vendors/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/admin/js/icheck.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+<script type="text/javascript" src="/js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" src="/js/icheck.js"></script>
+<script type="text/javascript">
 
+        function validate() {//验证后 才能提交
+            var child =  $('#class_id').find("option:selected").attr("haschild");
+            if(child){//说明不是一个子项,不能选择
+
+                layer.confirm('请选择确定的设备分类子项', {
+                    btn: ['关闭'],
+                    icon: 5,
+                },function(index){
+                    // _item.children('form').submit();
+                    console.log(index);
+                    layer.close(index);
+
+                });
+                return false;
+            }
+            else{
+                return true;
+            }
+        };
+        $(function () {
+           // $('#class_id').on('change',function (data) {
+           //        console.log(data);
+           // })
+        });
+
+
+</script>
 @endsection

@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('css')
-<link rel="stylesheet" type="text/css" href="/vendors/nestable/nestable.css">
-<link rel="stylesheet" type="text/css" href="/vendors/bootstrap-select/bootstrap-select.min.css">
-<link rel="stylesheet" type="text/css" href="/vendors/ionRangeSlider/ion.rangeSlider.css">
-<link rel="stylesheet" type="text/css" href="/vendors/ionRangeSlider/ion.rangeSlider.skinFlat.css">
-<link rel="stylesheet" type="text/css" href="/vendors/ladda/ladda-themeless.min.css">
+<link rel="stylesheet" type="text/css" href="/css/plugins/nestable/nestable.css">
+<link rel="stylesheet" type="text/css" href="/css/plugins/bootstrap-select/bootstrap-select.min.css">
+<link rel="stylesheet" type="text/css" href="/css/plugins/ionRangeSlider/ion.rangeSlider.css">
+<link rel="stylesheet" type="text/css" href="/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css">
+<link rel="stylesheet" type="text/css" href="/css/plugins/ladda/ladda-themeless.min.css">
 
 @endsection
 @section('content')
@@ -64,14 +64,14 @@
 </div>
 @endsection
 @section('js')
-<script src="/vendors/nestable/jquery.nestable.js/"></script>
-<script src="/vendors/bootstrap-select/bootstrap-select.min.js"></script>
-<script src="/vendors/ionRangeSlider/ion.rangeSlider.min.js"></script>
-<script src="/vendors/ladda/spin.min.js"></script>
-<script src="/vendors/ladda/ladda.min.js"></script>
-<script src="/vendors/ladda/ladda.jquery.min.js"></script>
-<script src="/vendors/layer/layer.js"></script>
-<script src="/admin/js/institution/institution.js"></script>
+<script src="/js/plugins/nestable/jquery.nestable.js/"></script>
+<script src="/js/plugins/bootstrap-select/bootstrap-select.min.js"></script>
+<script src="/js/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
+<script src="/js/plugins/ladda/spin.min.js"></script>
+<script src="/js/plugins/ladda/ladda.min.js"></script>
+<script src="/js/plugins/ladda/ladda.jquery.min.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+<script src="/js/admin/institution/institution.js"></script>
 
 
 <script type="text/javascript">

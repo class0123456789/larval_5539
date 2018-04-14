@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/dataTables/datatables.min.css" rel="stylesheet">
+<link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 @endsection
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
   <div class="col-lg-10">
-    <h2>机构类型管理</h2>
+    <h2>机构级别管理</h2>
     <ol class="breadcrumb">
         <li>
             @if(haspermission('admin/dash'))
@@ -13,7 +13,7 @@
             @endif
         </li>
         <li class="active">
-            <strong>机构类型列表</strong>
+            <strong>机构级别列表</strong>
         </li>
     </ol>
   </div>
@@ -22,7 +22,7 @@
   <div class="col-lg-2">
     <div class="title-action">
       @if(haspermission('kind.create'))
-      <a href="{{url('admin/kind/create')}}" class="btn btn-info">增加机构类别</a>
+      <a href="{{url('admin/kind/create')}}" class="btn btn-info">增加机构级别</a>
       @endif
     </div>
   </div>
@@ -33,7 +33,7 @@
     <div class="col-lg-12">
       <div class="ibox float-e-margins">
         <div class="ibox-title">
-          <h5>机构类型管理</h5>
+          <h5>机构级别管理</h5>
           <div class="ibox-tools">
             <a class="collapse-link">
               <i class="fa fa-chevron-up"></i>
@@ -50,8 +50,8 @@
 		          <thead>
 			          <tr>
 			            <th >行号</th>
-                                    <th >ID</th>
-			            <th>类别名称</th>
+                        <th >ID</th>
+			            <th>级别名称</th>
 			            <th>增加时间</th>
 			            <th>修改时间</th>
 			            <th>操作</th>
@@ -73,13 +73,13 @@
 </div>
 @endsection
 @section('js')
-<script src="/vendors/dataTables/datatables.min.js"></script>
-  <script src="/vendors/layer/layer.js"></script>
+<script src="/js/plugins/dataTables/datatables.min.js"></script>
+  <script src="/js/plugins/layer/layer.js"></script>
 
 <script type="text/javascript">
   $(document).on('click','.destroy_item',function() {
     var _item = $(this);
-    layer.msg('机构类别删除提示', {
+    layer.msg('机构级别删除提示', {
       time: 0, //不自动关闭
       btn: ['确定', '取消'],
       icon: 5,
@@ -96,7 +96,7 @@
                 var cid = 0;
                 var table = $("#dataTableBuilder").DataTable({
                     language: {
-                        'url': '/vendors/dataTables/language/zh.json',       
+                        'url': '/css/plugins/dataTables/language/zh.json',
                     },
                     "lengthMenu": [[ 10,15,20,30, -1], [10, 15, 20, 30, "全部"]],
 

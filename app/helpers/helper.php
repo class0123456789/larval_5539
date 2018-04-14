@@ -444,6 +444,7 @@ if(!function_exists('sortInstitution')){//获取指定父级机构的所有子�
                         //$curr_institution= \App\Models\Institution::find($pid)->toArray();
                         $admin_curr_institution =_findInstitution($institutions,$pid);//在原始数据记录中取id=pid的机构
 			            $institutionList = _childInstitution($institutions,$pid);//取pid的子级,机构整理
+                        //dd($institutionList);
 
                         if($admin_curr_institution){
                             if($institutionList){
@@ -518,6 +519,42 @@ if(!function_exists('_childInstitution')){//递归
 }
 
 
+//机构整理成带有child字段的数组结构,递归整理
+    if(!function_exists('_getchildInstitution')){//递归
+        function _getchildInstitution($institutions,$pid=1)
+        {
+            $arr = [];
+            if (empty($institutions)) {
+                return $arr;
+            }
+            foreach ($institutions as $key => $v) {
+                //if($v['id'] == $pid){
+                //    $arr[$key] = $v;
+                //    $arr[$key]['child']= self::sortInstitution($institutions,$v['id']);
+                //}
+                if (intval($v['id']) == intval($pid)) {
+                    dd($v['id'],$pid);
+                    //$arr[$key] = $v;
+                    //$arr[$key]['child'] = _childInstitution($institutions,$v['id']);
+                    $arr[$key]=$v;
+                    return $arr;
+                    //break 1;
+                }else{
+                    if($v['child']) {
+                         _getchildInstitution($v['child'],$pid);
+                    }
+                }
+
+            }
+            return $arr;
+        }
+
+    }
+
+
+
+
+
 if(!function_exists('_findInstitution')){//获取指定的机构信息 ,返回的是原始array的1条数据 不带child,level 字段
     function _findInstitution($institutions,$id=1)
 	{
@@ -552,7 +589,7 @@ if(!function_exists('_findInstitution')){//获取指定的机构信息 ,返回�
  * @return mixed
  */
 if(!function_exists('recursion_orderby')){
-        function recursion_orderby($data, $orderKey = 'id', $sonKey = 'child', $orderBy = SORT_ASC,$level=1)
+        function recursion_orderby($data, $orderKey = 'id', $sonKey = 'child', $orderBy = SORT_ASC,$level=0)
         {
             //$sort = array_column($v['child'], 'id');                               
             //array_multisort($sort,SORT_ASC,$v['child']);

@@ -13,7 +13,7 @@ class FinancialApproval extends Model
      * @var array
      */
     protected $fillable = [
-        'file_no', 'file_url'
+        'file_no', 'file_url','house_id'
     ];
     //public $timestamps = false;
 }

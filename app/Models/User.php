@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','employee_id'
+        'name', 'email', 'password','employee_id','phone','sfz'
     ];
 
     /**
@@ -51,7 +51,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Employee::class);
     }
-    
+
+    //与消息表关联
+    public function message()
+    {
+        return $this->hasMany(Message::class);
+    }
+
 
 }
 

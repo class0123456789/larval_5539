@@ -2,7 +2,7 @@
 
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/dataTables/datatables.min.css" rel="stylesheet">
+<link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 @endsection
 @section('content')
 
@@ -11,7 +11,7 @@
 
 
 <div class="row wrapper border-bottom white-bg page-heading">
-  <div class="col-lg-10">
+  <div class="col-lg-6">
     <h2>设备登记管理</h2>
     <ol class="breadcrumb">
         <li>
@@ -27,12 +27,34 @@
     </ol>
   </div>
    @if(haspermission('devicewarehouse.create'))
-  <div class="col-lg-2">
+  <div class="col-lg-1">
     <div class="title-action">
-      <a href="{{url('admin/devicewarehouse/create')}}" class="btn btn-info">设备登记</a>
+      <a href="{{url('admin/devicewarehouse/create')}}" class="btn btn-w-m btn-info ">设备入库</a>
     </div>
   </div>
   @endif
+    @if(haspermission('admin/devicewarehouse/supplement'))
+        <div class="col-lg-1">
+            <div class="title-action">
+                <a href="{{url('admin/devicewarehouse/supplement')}}" class="btn btn-w-m btn-warning">设备补录</a>
+            </div>
+        </div>
+    @endif
+    <div class="col-lg-1">
+        <div class="title-action">
+            <a href="{{url('admin/devicewarehouse/applytouse')}}" class="btn btn-w-m btn-success">设备申领</a>
+        </div>
+    </div>
+    <div class="col-lg-1">
+        <div class="title-action">
+            <a href="{{url('admin/devicewarehouse/applicationreview')}}" class="btn btn-w-m btn-danger">申领审核</a>
+        </div>
+    </div>
+    <div class="col-lg-1">
+        <div class="title-action">
+            <a href="{{url('admin/devicewarehouse/redeployment')}}" class="btn btn-w-m btn-primary">设备调出</a>
+        </div>
+    </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
@@ -61,23 +83,15 @@
                         <th>供应厂商id</th>
 			            <th>维保厂商id</th>
                         <th>财务批号</th>
-                        <th>设备条型码</th>
                         <th>设备序列号</th>
-                        <th>设备IP信息</th>
-                        <th>设备MAC信息</th>
-                        <th>软件配置</th>
-                        <th>用途</th>
+                        <th>设备硬件地址</th>
                         <th>购买价格</th>
                         <th>购买日期</th>
-                        <th>保修期限</th>
-                        <th>保修到期日</th>
+                        <th>维保起始日</th>
+                        <th>维保截止日</th>
                         <th>运行状态</th>
                         <th>保管状态</th>
-                        <th>使用地址</th>
-                        <th>使用人</th>
                         <th>登记人</th>
-                          <th>设备管理人</th>
-                          <th>所在机构</th>
                         <th>仓库编号</th>
                         <th>备注</th>
 
@@ -97,8 +111,8 @@
 @endsection
 @section('js')
 
-<script src="/vendors/dataTables/datatables.min.js"></script>
-<script src="/vendors/layer/layer.js"></script>
+<script src="/js/plugins/dataTables/datatables.min.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
 <script type="text/javascript">
   $(document).on('click','.destroy_item',function() {
     var _item = $(this);
@@ -135,7 +149,7 @@
                 var cid = 0;
                 var table = $("#dataTableBuilder").DataTable({
                     language: {
-                        'url': '/vendors/dataTables/language/zh.json',       
+                        'url': '/css/plugins/dataTables/language/zh.json',
                     },
                     "lengthMenu": [[ 10,15,20,30, -1], [10, 15, 20, 30, "全部"]],
 
@@ -232,23 +246,24 @@
                         {"data": "device_supplier_id"},
                         {"data": "device_maintenaceprovier_id"},
                         {"data": "device_financialapproval_id"},
-                        {"data": "barcode"},
+
                         {"data": "serial_number"},
-                        {"data": "device_ipaddr"},
+
                         {"data": "device_macaddr"},
-                        {"data": "device_software_config"},
-                        {"data": "equipment_use_id"},
+
+
+
                         {"data": "device_price"},
                         {"data": "purchased_date"},
-                        {"data": "expiry_date"},
+                        {"data": "start_date"},
                         {"data": "over_date"},
                         {"data": "device_work_state"},
                         {"data": "device_save_state"},
-                        {"data": "device_save_addr"},
-                        {"data": "device_user"},
+
+
+
                         {"data": "device_registrar"},
-                        {"data": "device_trustee"},
-                        {"data": "institution_id"},
+
                         {"data": "house_id"},
                         {"data": "comment"},
 

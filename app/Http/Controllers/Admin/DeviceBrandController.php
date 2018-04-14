@@ -99,7 +99,19 @@ class DeviceBrandController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $brand = DeviceBrand::find($id);
+            //dd($brand);
+            //$deviceclasses=$this->getCurrDeviceClasses();
+            //dd($deviceclasses);
+            // dd( $devicemodel['brand']->name);
+            return view('admin.brand.show',compact('brand'));
+        } catch (Exception $e) {
+            //flash('查看错误', 'danger');
+            flash($e->getMessage(), 'danger');
+            redirect('/admin/brand');
+            //redirect('/admin/role');
+        }
     }
 
     /**
@@ -113,6 +125,7 @@ class DeviceBrandController extends Controller
         try {
             //with预加载
             $brand = DeviceBrand::find($id);
+            //dd($brand);
             //dd($role->permissions);
             //$permissions = $this->getAllPermissions();
             //$permissions=getAllPermissions();

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <title>后台登录</title>
-  <link rel="stylesheet" type="text/css" href="{{asset('admin/css/login.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{asset('/css/login.css')}}" />
   <style>
   body{height:100%;background:#16a085;overflow:hidden;}
   canvas{z-index:-1;position:absolute;}
@@ -42,8 +42,8 @@
     </dd>
   </dl>
 </form>
-  <script src="{{asset('vendors/jquery/jquery-2.1.1.js')}}"></script>
-  <script src="{{asset('vendors/Particleground.js')}}"></script>
+  <script src="{{asset('js/jquery-3.1.1.min.js')}}"></script>
+<script src="{{asset('js/Particleground.js')}}"></script>
   <script>
   $(document).ready(function() {
   //粒子背景特效

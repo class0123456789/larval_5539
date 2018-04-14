@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="_token" content="{{ csrf_token() }}"> 
   <title>Laravel5.5后台</title>
-  <link href="{{asset('vendors/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-  <link href="{{asset('vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-  <link rel="stylesheet" href="/admin/iconfont/iconfont.css" />
-  <link href="{{asset('vendors/animate/animate.css')}}" rel="stylesheet">
+  <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{asset('/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+  <link rel="stylesheet" href="/css/iconfont/iconfont.css" />
+  <link href="{{asset('/css/animate.css')}}" rel="stylesheet">
   @yield('css')
-  <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
+  <link href="{{asset('/css/style.css')}}" rel="stylesheet">
 </head>
 <body class="">
   <div id="wrapper">
@@ -53,11 +53,12 @@
 
     </div>
   </div>
-  <script type="text/javascript" src="/vendors/jquery/jquery-3.1.1.min.js"></script>
-  <script type="text/javascript" src="/vendors/bootstrap/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/vendors/metisMenu/jquery.metisMenu.js"></script>
-  <script type="text/javascript" src="/vendors/slimscroll/jquery.slimscroll.min.js"></script>
-  <script type="text/javascript" src="/admin/js/inspinia.js"></script>
+  <script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+  <script type="text/javascript" src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+  <script type="text/javascript" src="/js/inspinia.js"></script>
+  <script type="text/javascript" src="/js/plugins/pace/pace.min.js"></script>
   
   @yield('js')
 </body>

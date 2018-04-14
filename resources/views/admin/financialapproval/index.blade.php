@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/dataTables/datatables.min.css" rel="stylesheet">
+<link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 @endsection
 @section('content')
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -50,11 +50,12 @@
 		          <thead>
 			          <tr>
 			            <th >行号</th>
-                                    <th >ID</th>
+                        <th >ID</th>
 			            <th>文件编号</th>
 			            <th>文件URL</th>
                         <th>增加时间</th>
-			            <th>修改时间</th>
+                        <th>仓储id</th>
+
 			            <th>操作</th>
 			          </tr>
 		          </thead>
@@ -74,8 +75,8 @@
 </div>
 @endsection
 @section('js')
-<script src="/vendors/dataTables/datatables.min.js"></script>
-  <script src="/vendors/layer/layer.js"></script>
+<script src="/js/plugins/dataTables/datatables.min.js"></script>
+  <script src="/js/plugins/layer/layer.js"></script>
 
 <script type="text/javascript">
   $(document).on('click','.destroy_item',function() {
@@ -97,7 +98,7 @@
                 var cid = 0;
                 var table = $("#dataTableBuilder").DataTable({
                     language: {
-                        'url': '/vendors/dataTables/language/zh.json',       
+                        'url': '/css/plugins/dataTables/language/zh.json',
                     },
                     "lengthMenu": [[ 10,15,20,30, -1], [10, 15, 20, 30, "全部"]],
 
@@ -166,7 +167,8 @@
                         {"data": "file_no"},
                         {"data": "file_url"},
                         {"data": "created_at"},
-                        {"data": "updated_at"},
+                        {"data": "institution_name"},
+
                         {"data": "action","type": "html","searchable": false,"orderable" : false}
                     ],
 
@@ -179,7 +181,7 @@
                             //},
                             //-1最后一列
                             'targets': -1, "render": function (data, type, row) {
-                            //var row_show = {{haspermission('financialapproval.show')? 1 : 0}};    
+                            var row_show = {{haspermission('financialapproval.show')? 1 : 0}};
                             var row_edit = {{haspermission('financialapproval.edit')? 1 : 0}};
                             var row_delete = {{haspermission('financialapproval.destroy') ? 1 :0}};
                             var str = '';
@@ -189,19 +191,19 @@
                             //    str += '<a style="margin:3px;"  href="/admin/permission/' + row['id'] + '" class="X-Small btn-xs text-success "><i class="fa fa-adn"></i>下级菜单</a>';
                             //}
                             //查看
-                            //if (row_show) {
-                                //str += '<a style="margin:3px;" href="/admin/permission/' + row['id'] + '/edit" class="X-Small btn-xs text-success "><i class="fa fa-edit"></i> 编辑</a>';
-                            //    str +='<a href="/admin/role/'+row['id']+'" class="btn btn-xs btn-info tooltips" data-toggle="modal" data-target="#myModal"  data-original-title="查看" data-placement="top"><i class="fa fa-eye"></i></a>';
-                            //}
+                            if (row_show) {
+                                //str += '<a style="margin:3px;" href="/admin/permission/' + row['id'] + '/edit" class="X-Small btn-xs text-success "><i class="fa fa-edit"></i> 编辑</a>'  data-toggle="modal" data-target="#myModal" ;
+                                str +='<a href="/admin/financialapproval/'+row['id']+'" class="btn btn-xs btn-outline btn-info tooltips"   data-original-title="查看" data-placement="top"><i class="fa fa-eye"></i></a>';
+                            }
 
                             //编辑
-                            if (row_edit && row['id']!=1) {//id为1不能编
+                            if (row_edit ) {//id为1不能编
                                 //str += '<a style="margin:3px;" href="/admin/permission/' + row['id'] + '/edit" class="X-Small btn-xs text-success "><i class="fa fa-edit"></i> 编辑</a>';
                                 str +='<a href="/admin/financialapproval/'+row['id']+'/edit" class="btn btn-xs btn-outline btn-warning tooltips" data-original-title="编辑" data-placement="top"><i class="fa fa-edit"></i></a>';
                             }
 
                             //删除
-                            if (row_delete && row['id']!=1) {//id为1不能删
+                            if (row_delete ) {//id为1不能删
                                 //str += '<a style="margin:3px;" href="#" attr="' + row['id'] + '" class="delBtn X-Small btn-xs text-danger"><i class="fa fa-times-circle"></i> 删除</a>';
                                 str +='<a href="javascript:;" onclick="return false" class="btn btn-xs btn-outline btn-danger tooltips destroy_item" data-original-title="删除"  data-placement="top"><i class="fa fa-trash"></i><form action="/admin/financialapproval/'+row['id']+'" method="POST" style="display:none"><input type="hidden" name="_token" value="{{csrf_token()}}"><input type="hidden" name="_method" value="delete"></form></a>';
                            }
@@ -221,23 +223,32 @@
                                                     placement : 'top',
                                                     html : true
                                                 });
-                                                //增加选择框
-                                                if($('#jgh').length===0){
-                                                        let htmlable="<label>菜单<select name='jgh' id='jgh'><option value='0' check>所有</option><option value='1'>一级菜单</option><option value='2'>二级菜单</option><option value='-1'>非菜单</option></select></label>";
-                                                        $("#dataTableBuilder_length").prepend(htmlable);
-                                                        $('#jgh').change(function () {
-                                                            //更改自已的参数值
-                                                            table.context[0]['ajax']['data']={
-                                                                jgh:$('#jgh').val()
-                                                            };
-                                                            cid = $('#jgh').val();//保存值
-                                                            //console.log(table.context[0]['ajax']['data']);
-                                                            table.search('').draw();//发送到后台                                                                                         
-                                                         });
-                                                }else{
-                                                    //console.log(cid);
-                                                        $('#jgh').val(cid); //设置默认值
-                                                }
+                                            //增加选择框
+                                            if($('#jgh').length===0){
+                                                let htmlable="";
+
+                                                @foreach($currinstitutions as $k=>$v)
+                                                    htmlable=htmlable+'<option value="{{$k}}">{{str_repeat("&nbsp;&nbsp;",$v['level'])}}{{$v['name']}}{{str_repeat("&nbsp;&nbsp;",$v['level'])}}</option>';
+
+                                                @endforeach
+                                                //console.log(htmlable);
+
+                                                //htmlable="<label>分类选择<select name='jgh' id='jgh'><option value='0' check>所有</option>"+htmlable+"</select></label>";
+                                                htmlable="<label>仓储选择<select name='jgh' id='jgh'>"+htmlable+"</select></label>";
+                                                $("#dataTableBuilder_length").prepend(htmlable);
+                                                $('#jgh').change(function () {
+                                                    //更改自已的参数值
+                                                    table.context[0]['ajax']['data']={
+                                                        jgh:$('#jgh').val()
+                                                    };
+                                                    cid = $('#jgh').val();//保存值
+                                                    //console.log(table.context[0]['ajax']['data']);
+                                                    table.search('').draw();//发送到后台
+                                                });
+                                            }else{
+                                                //console.log(cid);
+                                                $('#jgh').val(cid); //设置默认值
+                                            }
                                                         //增加行号
                                                         //var api = this.api();
                                                         //var startIndex= api.context[0]._iDisplayStart;//获取到本页开始的条数

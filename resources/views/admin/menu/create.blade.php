@@ -28,9 +28,9 @@
         </div>
       </div>
    <!-- Ionicons -->
-    <link rel="stylesheet" href="/libs/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/ionicons/css/ionicons.min.css">
     
-    <link rel="stylesheet" href="/plugins/bootstrap-iconpicker/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css"/>
+    <link rel="stylesheet" href="/css/plugins/bootstrap-iconpicker/bootstrap-iconpicker/css/bootstrap-iconpicker.min.css"/>
       <div class="hr-line-dashed"></div>
       <div class="form-group">
         <label class="col-sm-2 control-label">菜单图标</label>
@@ -41,8 +41,8 @@
       </div>
 
 
-    <script type="text/javascript" src="/plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.3.0.min.js"></script>
-    <script type="text/javascript" src="/plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.js"></script>
+    <script type="text/javascript" src="/js/plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.3.0.min.js"></script>
+    <script type="text/javascript" src="/js/plugins/bootstrap-iconpicker/bootstrap-iconpicker/js/bootstrap-iconpicker.js"></script>
 
 
       <div class="hr-line-dashed"></div>

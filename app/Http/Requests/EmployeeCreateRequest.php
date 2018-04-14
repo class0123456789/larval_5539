@@ -30,9 +30,11 @@ class EmployeeCreateRequest extends FormRequest
         $rules['post'] = 'nullable|string';
         $rules['sex'] ="required|boolean";
         $rules['institution_id'] ="required";
+        $rules['sfz'] = 'string|between:18,18';
         // 添加
         if (request()->isMethod('POST')) {
             $rules['mobile'] = 'required|unique:admin_employees,mobile|digits_between:11,11';
+
         }else{
             //$this->route('employee')->id; //得到路由中employee对象的id
            
@@ -41,8 +43,9 @@ class EmployeeCreateRequest extends FormRequest
                 'required',
                 'digits_between:11,11',
                 'unique:admin_employees,mobile,'.$this->route('employee')->id,//排除ID
-             //Rule::unique('admin_employees,mobile')->ignore(request()->route('admin/employee'),'id'),
+                //Rule::unique('admin_employees,mobile')->ignore(request()->route('admin/employee'),'id'),
             ];
+
             
            // Validator::make($data, [
     //'mobile' => [

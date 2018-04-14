@@ -17,6 +17,7 @@ class CreateDeviceFinancialApprovalTable extends Migration
             $table->increments('id');
             $table->string('file_no')->comment('文件审批字号');
             $table->string('file_url')->comment('pdf审批文件链接');
+            $table->integer('house_id')->comment('仓库编号');
             $table->timestamps();
         });
     }

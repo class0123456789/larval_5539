@@ -50,12 +50,18 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         // 将方法拦截到自己的ExceptionReport
-        //dd($request);
+
+
+        if ($exception instanceof \Illuminate\Http\Exceptions\PostTooLargeException) {
+            abort(503, "This file is too large");
+        }
         $reporter = ExceptionReport::make($exception);
 
         if ($reporter->shouldReturn()){
             return $reporter->report();
         }
+
+
         return parent::render($request, $exception);
     }
 }

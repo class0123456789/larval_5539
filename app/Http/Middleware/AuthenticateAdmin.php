@@ -112,27 +112,36 @@ class AuthenticateAdmin
         //dd($r_name);
         
         //dd($r_name);
+
         if(!$r_name){//没有名称， 为空的时候,取当前路由的uri
              //return $next($request);
             $r_name = Route::current()->uri;//2 当前访问的uri 取路由uri
           //    dump($r_name);
+            //dd($r_name);
         }
+        //dd($r_name);
         if ($request->ajax() ){//3 对自已定义的ajax的后台路由 把前辍去掉 uri路由中以admin/开头,而admin路由表中写法是不带这个前辍的
-                    if(starts_with($r_name, 'admin/') ){
-                        $r_name =str_replace("admin/","",$r_name);
+
+                    //if(starts_with($r_name, 'admin/') ){
+                    //    $r_name =str_replace("admin/","",$r_name);
                         
-                    }
+                    //}
        }
+
        //测试ajax路由的返回情况写法
 //         return response()->json([
 //                    'status' => -1,
 //                    'code'   => 403,
 //                    'data'    => $r_name,
 //                ]);
+
+        //dd($r_name,haspermission($r_name));
         if($r_name){//名不为空
-          
+
             if(haspermission($r_name)){
+                //dd($r_name);
                  return $next($request);
+                //return $next;
             } 
         }
           

@@ -85,10 +85,21 @@
     Route::resource('kind', 'KindController');
     
     //员工
+        Route::get('employee/autocreate', 'EmployeeController@autocreate');
+        Route::post('employee/autostore', 'EmployeeController@autostore');
+        Route::post('employee/autodelete', 'EmployeeController@autodelete');
+        Route::get('employee/autodeleteview', 'EmployeeController@autodeleteview');
+        Route::get('employee/downloadview', 'EmployeeController@downloadview');
+        Route::post('employee/download', 'EmployeeController@download');
     Route::resource('employee', 'EmployeeController');
     
     //前台操作员表
+
     Route::post('fuser/getemployees','FuserController@getEmployees');
+    Route::get('fuser/autocreate', 'FuserController@autocreate');
+    Route::post('fuser/autostore', 'FuserController@autostore');
+    Route::post('fuser/autodelete', 'FuserController@autodelete');
+    Route::get('fuser/autodeleteview', 'FuserController@autodeleteview');
     Route::resource('fuser', 'FuserController');
 
     //设备品牌表
@@ -109,9 +120,29 @@
         //设备保养厂商
         Route::resource('maintenanceprovider','MaintenanceProviderController');
 
+        //根据品牌查 设备型号详情
+        Route::post('devicewarehouse/ajaxbrand','DeviceWareHouseController@ajaxbrand');
+        //设备批文详情
+        Route::get('devicewarehouse/showfile','DeviceWareHouseController@showfile');
+
+        //设备补录
+        Route::get('devicewarehouse/supplement','DeviceWareHouseController@supplement');
+        //设备申领
+        Route::get('devicewarehouse/applytouse','DeviceWareHouseController@applytouse');
+        //设备申领审核
+        Route::get('devicewarehouse/applicationreview','DeviceWareHouseController@applicationreview');
+        //设备调拔
+        Route::get('devicewarehouse/redeployment','DeviceWareHouseController@redeployment');
+
+        //设备借出
+        Route::get('devicewarehouse/borrowing','DeviceWareHouseController@borrowing');
+
+        //设备归还
+        Route::get('devicewarehouse/equipmentreturn','DeviceWareHouseController@equipmentreturn');
 
         //设备仓库管理
         Route::resource('devicewarehouse','DeviceWareHouseController');
+
 
         //设备保管状态管理
         Route::resource('devicesavestate','DeviceSaveStateController');
@@ -119,9 +150,18 @@
         //设备工作状态管理
         Route::resource('deviceworkstate','DeviceWorkStateController');
 
+        //设备仓库管理
+        //Route::get('financialapproval/showfile/{financialapproval}','FinancialApprovalController@showfile')->name('financialapproval.showfile');
+
         //硬件购置审批文件管理
         Route::resource('financialapproval','FinancialApprovalController');
-    
+
+
+        //机构-硬件-配置表 管理
+        Route::resource('houseinstitution','HouseInstitutionController');
+
+
+
 
 
 });

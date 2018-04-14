@@ -2,7 +2,7 @@
 
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/dataTables/datatables.min.css" rel="stylesheet">
+<link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 @endsection
 @section('content')
 
@@ -74,11 +74,18 @@
   	</div>
   </div>
 </div>
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+
+        </div>
+    </div>
+</div>
 @endsection
 @section('js')
 
-<script src="/vendors/dataTables/datatables.min.js"></script>
-<script src="/vendors/layer/layer.js"></script>
+<script src="/js/plugins/dataTables/datatables.min.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
 <script type="text/javascript">
   $(document).on('click','.destroy_item',function() {
     var _item = $(this);
@@ -115,7 +122,7 @@
                 var cid = 0;
                 var table = $("#dataTableBuilder").DataTable({
                     language: {
-                        'url': '/vendors/dataTables/language/zh.json',       
+                        'url': '/css/plugins/dataTables/language/zh.json',
                     },
                     "lengthMenu": [[ 10,15,20,30, -1], [10, 15, 20, 30, "全部"]],
 
@@ -244,7 +251,7 @@
                             if (row_show) {
                                 
                                 //str += '<a style="margin:3px;" href="/admin/permission/' + row['id'] + '/edit" class="X-Small btn-xs text-success "><i class="fa fa-edit"></i> 编辑</a>';
-                                str +='<a href="/admin/devicemodel/'+row['id']+'" class="btn btn-xs btn-info tooltips"  data-original-title="查看" data-placement="top"><i class="fa fa-eye"></i></a>';
+                                str +='<a href="/admin/devicemodel/'+row['id']+'" class="btn btn-xs btn-info tooltips" data-toggle="modal" data-target="#myModal"  data-original-title="查看" data-placement="top"><i class="fa fa-eye"></i></a>';
                             }
 
                             //编辑

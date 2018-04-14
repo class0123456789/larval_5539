@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('css')
-<link href="/vendors/iCheck/custom.css" rel="stylesheet">
+<link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
 @endsection
 @section('content')
 @inject('devicemodelPresenter','App\Repositories\Presenters\DeviceModelPresenter')
@@ -78,7 +78,7 @@
               <div class="col-sm-10">
                   <select name="class_id" class="form-control" id="class_id">
 
-                      {!!$devicemodelPresenter->topDeviceClasslList($curr_deviceclasses) !!}
+                      {!!$devicemodelPresenter->topDeviceClassList($curr_deviceclasses) !!}
                   </select>
                  
               </div>
@@ -103,9 +103,9 @@
 @include('admin.user.modal')
 @endsection
 @section('js')
-    <script src="/vendors/layer/layer.js"></script>
-<script type="text/javascript" src="/vendors/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/admin/js/icheck.js"></script>
+<script src="/js/plugins/layer/layer.js"></script>
+<script type="text/javascript" src="/js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript" src="/js/icheck.js"></script>
 <script type="text/javascript">
 
     function validate() {//验证后 才能提交
